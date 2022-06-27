@@ -37,10 +37,17 @@ const User = (props) => {
     const hpRef = useRef();
     const characterBodyRef = useRef();
     const [hp, setHp] = useState(100);
+    const [curPos, setCurPos] = useState({});
     
+    let interval;
+
     useEffect(() => {
         characterRef.current.style.left = mX + 8 +'px';
-        characterRef.current.style.top = mY + 8 +'px';
+        characterRef.current.style.top = mY + 8 + 'px';
+        interval = setInterval(() => {
+        setCurPos({ ...curPos, x: characterRef.current.getBoundingClientRect().left, y: characterRef.current.getBoundingClientRect().top });
+            console.log(curPos);
+        }, 100);
     }, []);
 
     useEffect(() => {
@@ -51,7 +58,7 @@ const User = (props) => {
         characterRef.current.style.transitionDuration = 1 + (distance * 0.02) + 's';
         characterRef.current.style.left = mX + 8 +'px';
         characterRef.current.style.top = mY + 8 +'px';
-        console.log(mX, mY);
+        console.log(characterRef.current.getBoundingClientRect());
     }, [mX, mY]);
 
     useEffect(() => {
@@ -71,6 +78,13 @@ const User = (props) => {
             // characterRef.current.style.display = 'none';
         }
     });
+
+    useEffect(() => {
+        if (curPos.x === mX + 8 && curPos.y === mY + 8) {
+            console.log('reach target');
+            clearInterval(interval);
+        }
+    }, [curPos])
 
     return (
         <Character ref={characterRef}>

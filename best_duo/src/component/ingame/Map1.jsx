@@ -2,6 +2,8 @@ import React, { Component, useRef, useState } from 'react';
 import styled from 'styled-components';
 import PawImage from '../../images/paw.png';
 import User from './User';
+import Phaser from 'phaser';
+import { IonPhaser } from '@ion-phaser/react';
 
 const Map = styled.ul`
     display: flex;
@@ -30,7 +32,6 @@ const Map1 = (props) => {
 
     const tileOnClick = (e, index) => {
         setClicked(index);
-        console.log(e.target.getBoundingClientRect());
         const rect = e.target.getBoundingClientRect();
         setX(rect.x);
         setY(rect.y);
